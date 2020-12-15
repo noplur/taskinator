@@ -199,6 +199,7 @@ var taskStatusChangeHandler = function(event) {
     var taskListEl = event.target.closest(".task-list");
     if (taskListEl) {
     event.preventDefault();
+    taskListEl.setAttribute("style", "background: rgba(68, 233, 255, 0.7); border-style: dashed;");
     }
   };
 
@@ -221,8 +222,16 @@ var taskStatusChangeHandler = function(event) {
         statusSelectEl.selectedIndex = 2;
       }
     
+    dropZoneEl.removeAttribute("style");
     dropZoneEl.appendChild(draggableElement);
   };
+
+  var dragLeaveHandler = function(event) {
+    var taskListEl = event.target.closest(".task-list");
+    if (taskListEl) {
+      taskListEl.removeAttribute("style");
+    }
+  }
 
   formEl.addEventListener("submit", taskFormHandler);
 
@@ -234,3 +243,5 @@ var taskStatusChangeHandler = function(event) {
   pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 
   pageContentEl.addEventListener("drop", dropTaskHandler);
+
+  pageContentEl.addEventListener("dragLeave", dragLeaveHandler);
