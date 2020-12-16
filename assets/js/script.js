@@ -192,7 +192,7 @@ var taskStatusChangeHandler = function(event) {
         tasksToDoEl.appendChild(taskSelected);
       } 
       else if (statusValue === "in progress") {
-        tasksInProgressEl.appendChild(taskSelected);
+        tasksInProgressEl.appendChild(listItemEl);
       } 
       else if (statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
@@ -286,6 +286,24 @@ var taskStatusChangeHandler = function(event) {
   var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
+
+  var loadTasks = function() {
+    var savedTasks = localStorage.getItem("tasks");
+  // if there are no tasks, set tasks to an empty array and return out of the function
+  if (!savedTasks) {
+    return false;
+  }
+  console.log("Saved tasks found!");
+  
+  savedTasks = JSON.parse(savedTasks);
+  console.log("saved tasks")
+
+  // loop through savedTasks array
+  for (var i = 0; i < savedTasks.length; i++) {
+    // pass each task object into the `createTaskEl()` function
+    createTaskEl(savedTasks[i]);
+  };
+}
 
   formEl.addEventListener("submit", taskFormHandler);
 
